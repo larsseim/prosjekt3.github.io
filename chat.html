@@ -1,0 +1,100 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>IT prosjekt</title>
+    <link rel="stylesheet" href="runner.css">
+
+    <link rel="stylesheet" href="navigation.css">
+    <script src="dropdown.js"></script>
+</head>
+
+<body>
+        <div class="runner"></div>
+    <img src="bakgrunn.png" alt=""
+        style="width: 100vw; height: 100vh; position: fixed; top: 0px; left: 0px; z-index: -1;">
+
+    <header>
+            <img src="Bilder/logo.png" width="60" height="60" style="margin-top: 10px; margin-left: 10px;" alt="">
+        <h1>IT prosjekt: chat</h1>
+
+        <img class="dropdown-button" src="Bilder/dotdotdot.png" alt="">
+        <section class="dropdown-container">
+                <a href="index.html">Startside</a>
+                <a href="side1.html">personvern</a>
+                <a href="side2.html">datatryggleik</a>
+                <a href="chat.html">chat</a>
+                <a href="side4.html">wireframes</a>
+        </section>
+    </header>
+
+    <main>
+
+            <section class="chat">
+
+                    <form id="skjema">
+                            <article style="color: white; display: flex; flex-direction: column; height: 200px; overflow: scroll; border: 4px solid black;" id="txtmeldingar">
+                            
+                                </article>
+                            <input type="text" id="inpsendar" required placeholder="Kven er du?">
+                            <input type="text" id="inpmeining" required placeholder="Kva seier du?">
+                            <button type="submit" class="Button">OK</button>
+                            </form>
+                            
+            </section>
+
+    </main>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyBnlP6SRwIGFzs7v7dFKbj60aTz8KIA9fg",
+            authDomain: "lars-8060a.firebaseapp.com",
+            databaseURL: "https://lars-8060a.firebaseio.com",
+            projectId: "lars-8060a",
+            storageBucket: "lars-8060a.appspot.com",
+            messagingSenderId: "555874684715",
+            appId: "1:555874684715:web:ef9543e2d4daf26f"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    <script>
+        let database = firebase.database();
+        let meldingar = database.ref("meldingar");
+        let skjema = document.getElementById("skjema");
+        let inpsendar = document.getElementById("inpsendar");
+        let inpmeining = document.getElementById("inpmeining");
+        let txtmeldingar = document.getElementById("txtmeldingar")
+        function vismelding(snapshot){
+            let melding = snapshot.val();
+            let meldingtekst='<p> <b> ${melding.sendar}: </b> <i> ${melding.tekst}</i> </p>';
+
+            let meldsendar = melding.sendar + ": ";
+            let meldmeld = melding.tekst;
+            let fullmeld = meldsendar + meldmeld;
+            let hfueish = document.createTextNode(fullmeld);
+            let newLine = document.createElement("p");
+            newLine.appendChild(hfueish);
+            txtmeldingar.appendChild(newLine);
+        }
+
+            function regNyMelding(evt){evt.preventDefault();
+            var NyMelding={sendar:inpsendar.value,
+            tekst:inpmeining.value};
+            meldingar.push(NyMelding);
+            inpmeining.value="";}
+            meldingar.on("child_added",vismelding);
+            skjema.onsubmit=regNyMelding;
+    </script>
+    <img src="bilder/Skjermbilde 2019-05-30 kl. 15.44.03.png" alt="" style="width: 500px; height:500px; margin-left: 30%;">
+</body>
+
+</html>

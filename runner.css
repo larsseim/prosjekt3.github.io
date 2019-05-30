@@ -1,0 +1,19 @@
+
+.runner {
+    width: 266.666px;
+    height: 200px;
+    background: url(http://stephino.com/runner.png); 
+    animation: run 1s steps(24)infinite, slide 4s steps(100) infinite;
+    margin-left: 100%;
+    margin-top: 45px;
+    
+
+
+}
+@keyframes run {
+    100% {background-position: -6400px;}
+}
+
+@keyframes slide {
+    100% {margin-left: -266.666px; }
+}
